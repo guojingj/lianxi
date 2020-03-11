@@ -4,17 +4,7 @@
     <resultMap id="BaseResultMap" type="com.example.demo.paper.entity.Paper">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="text" jdbcType="VARCHAR" property="text"/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
-        <result column="" jdbcType="VARCHAR" property=""/>
     </resultMap>
 </mapper>
+
+
