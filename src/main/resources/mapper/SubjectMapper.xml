@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.subject.repository.SubjectDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.subject.entity.Subject">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="question" jdbcType="BIGINT" property="question" />
+        <result column="images" jdbcType="VARCHAR" property="images" />
+        <result column="hierarchy_classification_id" jdbcType="VARCHAR" property="hierarchyClassificationId" />
+        <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+        <result column="is_public" jdbcType="VARCHAR" property="isPublic" />
+        <result column="is_public_subject" jdbcType="VARCHAR" property="isPublicSubject" />
+        <result column="is_copy" jdbcType="VARCHAR" property="isCopy" />
+        <result column="answer" jdbcType="VARCHAR" property="answer" />
+        <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+        <result column="domain_id" jdbcType="VARCHAR" property="domainId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, type, question, images, hierarchy_classification_id, dept_id, is_public, is_public_subject, is_copy, answer, creator_id, domain_id
+    </sql>
+    <!--查询所有-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from knowledge_subject
+        <where>
+        <if test="subject.typeList != null"> and FIND_IN_SET(TYPE ,#{subject.typeList}) > 0</if>
+        <if test="subject.hierarchyClassificationId != null"> and hierarchy_classification_id = #{subject.hierarchyClassificationId,jdbcType=VARCHAR}</if>
+        <if test="subject.question != null"> and question like CONCAT("%",#{subject.question,jdbcType=VARCHAR},"%")</if>
+
+        </where>
+    </select>
+    <!--新增-->
+    <insert id="addQuestion" parameterType="com.example.demo.subject.entity.Subject">
+        insert into knowledge_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="type != null">type,</if>
+            <if test="question != null">question,</if>
+            <if test="images != null">images,</if>
+            <if test="hierarchyClassificationId != null">hierarchy_classification_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="isPublic != null">is_public,</if>
+            <if test="isPublicSubject != null">is_public_subject,</if>
+            <if test="isCopy != null">is_copy,</if>
+            <if test="answer != null">answer,</if>
+            <if test="creatorId != null">creator_id,</if>
+            <if test="domainId != null">domain_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=BIGINT},</if>
+            <if test="type != null">#{type,jdbcType=VARCHAR},</if>
+            <if test="question != null">#{question,jdbcType=VARCHAR},</if>
+            <if test="images != null">#{images,jdbcType=VARCHAR},</if>
+            <if test="hierarchyClassificationId != null">#{hierarchyClassificationId,jdbcType=VARCHAR},</if>
+            <if test="deptId != null">#{deptId,jdbcType=VARCHAR},</if>
+            <if test="isPublic != null">#{isPublic,jdbcType=VARCHAR},</if>
+            <if test="isPublicSubject != null">#{isPublicSubject,jdbcType=VARCHAR},</if>
+            <if test="isCopy != null">#{isCopy,jdbcType=VARCHAR},</if>
+            <if test="answer != null">#{answer,jdbcType=VARCHAR},</if>
+            <if test="creatorId != null">#{creatorId,jdbcType=VARCHAR},</if>
+            <if test="domainId != null">#{domainId,jdbcType=VARCHAR},</if>
+        </trim>
+    </insert>
+    <!--批量删除-->
+    <delete id="batchDelete" >
+        delete from knowledge_subject
+        where FIND_IN_SET(id,#{ids}) > 0
+    </delete>
+</mapper>

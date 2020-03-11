@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.hierarchy.repository.HierarchyDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.hierarchy.entity.Hierarchy">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="text" jdbcType="VARCHAR" property="text" />
+        <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+        <result column="pids" jdbcType="VARCHAR" property="pids" />
+        <result column="creator_id" jdbcType="VARCHAR" property="creatorId" />
+        <result column="domain_id" jdbcType="VARCHAR" property="domainId" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, text, parent_id, pids, creator_id, domain_id
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from knowledge_hierarchy_classification
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from knowledge_hierarchy_classification
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insertSelective" parameterType="com.example.demo.hierarchy.entity.Hierarchy">
+        insert into knowledge_hierarchy_classification
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="pids != null">
+                pids,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="domainId != null">
+                domain_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="text != null">
+                #{text,jdbcType=VARCHAR},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="pids != null">
+                #{pids,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=VARCHAR},
+            </if>
+            <if test="domainId != null">
+                #{domainId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <!--<insert id="insert" parameterType="com.example.demo.hierarchy.entity.Hierarchy">-->
+        <!--insert into knowledge_hierarchy_classification (id, text,-->
+        <!--parent_id,  pids, creator_id,-->
+        <!--domain_id-->
+        <!--)-->
+        <!--values (#{id,jdbcType=BIGINT}, #{text,jdbcType=VARCHAR},-->
+        <!--#{parentId,jdbcType=BIGINT}, #{pids,jdbcType=VARCHAR}, #{creatorId,jdbcType=VARCHAR},-->
+        <!--#{domainId,jdbcType=VARCHAR}-->
+        <!--)-->
+    <!--</insert>-->
+    <!--<update id="updateByPrimaryKey" parameterType="com.example.demo.hierarchy.entity.Hierarchy">-->
+        <!--update knowledge_hierarchy_classification-->
+        <!--set text = #{text,jdbcType=VARCHAR},-->
+        <!--parent_id = #{parentId,jdbcType=BIGINT},-->
+        <!--pids = #{pids,jdbcType=VARCHAR},-->
+        <!--creator_id = #{creatorId,jdbcType=VARCHAR},-->
+        <!--domain_id = #{domainId,jdbcType=VARCHAR}-->
+        <!--where id = #{id,jdbcType=BIGINT}-->
+    <!--</update>-->
+    <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.hierarchy.entity.Hierarchy">
+        update knowledge_hierarchy_classification
+        <set>
+            <if test="text != null">text = #{text,jdbcType=VARCHAR},</if>
+            <if test="parentId != null">parent_id = #{parentId,jdbcType=BIGINT},</if>
+            <if test="pids != null">pids = #{pids,jdbcType=VARCHAR},</if>
+            <if test="creatorId != null">creator_id = #{creatorId,jdbcType=VARCHAR},</if>
+            <if test="domainId != null">domain_id = #{domainId,jdbcType=VARCHAR},</if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="batchQuery" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from knowledge_hierarchy_classification
+        where FIND_IN_SET(id,#{value}) > 0
+    </select>
+    <delete id="batchDelete" >
+        delete from knowledge_hierarchy_classification
+        where FIND_IN_SET(id,#{ids}) > 0
+    </delete>
+    <!--查询所有-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List" />
+        from knowledge_hierarchy_classification
+    </select>
+</mapper>

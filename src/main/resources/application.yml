@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/knowledge?serverTimezone=CTT&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&&useSSL=false
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml  #配置映射文件
+  #type-aliases-package: com.example.demo.bean
+
+swagger:
+  enabled: true
+
+qiniu:
+  accessKey: 0HSg6ycXlN685W6tzJrmh3lqZF2YnnCGc47_Gh7B
+  secretKey: K4bQhmQpl1XFWkrRlfqf4-Ks44b9oa7kC2oImpOc
+  bucket: image
+  path: http://imagetest.ovuems.com/
